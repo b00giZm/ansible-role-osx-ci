@@ -364,6 +364,9 @@ class HomebrewCask(object):
                  upgrade_all=False, greedy=False):
         if not install_options:
             install_options = list()
+        if 'cask' not in install_options:
+            install_options.append('cask')
+
         self._setup_status_vars()
         self._setup_instance_vars(module=module, path=path, casks=casks,
                                   state=state, sudo_password=sudo_password,
@@ -587,7 +590,7 @@ class HomebrewCask(object):
             raise HomebrewCaskException(self.message)
 
         opts = (
-            [self.brew_path, 'install', '--cask', self.current_cask]
+            [self.brew_path, 'install', self.current_cask]
             + self.install_options
         )
 
@@ -704,7 +707,7 @@ class HomebrewCask(object):
             raise HomebrewCaskException(self.message)
 
         opts = (
-            [self.brew_path, 'cask', 'uninstall', self.current_cask]
+            [self.brew_path, 'uninstall', self.current_cask]
             + self.install_options
         )
 
